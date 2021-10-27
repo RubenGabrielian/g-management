@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\DB;
 
 class Workers extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function add () {
         return view("workers.add");
     }
