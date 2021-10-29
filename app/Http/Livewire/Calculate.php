@@ -12,18 +12,30 @@ class Calculate extends Component
     public $test = '';
     public $salary = '';
     public $total = 0;
-
-
+    public $work_qm_price = 0;
+    public $position_2_total = 0;
 
     public function calc () {
         $explodeDate = explode("-", $this->month);
         $year = $explodeDate[0];
         $month = $explodeDate[1];
-        $this->salary = \App\Models\Salary::where("worker_id", $this->worker->id)->where("year", $year)->where("month", $month)->get();
+        $this->salary = \App\Models\Salary::where("worker_id", $this->worker->id)
+            ->where("year", $year)
+            ->where("month", $month)
+            ->with('worker')
+            ->with('work')
+            ->get();
+
+
         $this->total = 0;
         foreach($this->salary as $sal) {
-            $this->total += $sal->price;
+            if($sal->worker->position_id == 1) {
+                $this->total += $sal->worker->default_salary;
+            } else {
+                $this->total+= $sal->qm * $sal->work->qm_price;
+            }
         }
+
     }
 
 

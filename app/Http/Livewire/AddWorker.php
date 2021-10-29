@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Position;
 use App\Models\Worker;
 use Livewire\Component;
 
@@ -10,7 +11,7 @@ class AddWorker extends Component
     public $name;
     public $surname;
     public $position;
-
+    public $defaultSalary;
 
     protected $rules = [
         'name' => 'required',
@@ -24,6 +25,10 @@ class AddWorker extends Component
         'position.required' => 'Պաշտոնը պարտադիր է',
     ];
 
+    public function changePosition ($id) {
+        $this->position = $id;
+        $this->dispatchBrowserEvent('position-changed',['id' => $id]);
+    }
 
     public function add () {
         $this->validate();
@@ -31,14 +36,21 @@ class AddWorker extends Component
         $worker = new Worker();
         $worker->name = $this->name;
         $worker->surname = $this->surname;
-        $worker->position = $this->position;
+        $worker->position_id = $this->position;
+        $worker->default_salary = $this->defaultSalary;
         $worker->save();
         session()->flash('message', 'Աշխատակիցը հաջողությամբ ավելացավ');
 
+        $this->name = '';
+        $this->surname = '';
+        $this->defaultSalary = '';
     }
 
     public function render()
     {
-        return view('livewire.add-worker');
+        $positions = Position::all();
+        return view('livewire.add-worker',[
+            "positions" => $positions
+        ]);
     }
 }

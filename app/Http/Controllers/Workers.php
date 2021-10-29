@@ -19,7 +19,7 @@ class Workers extends Controller
     }
 
     public function list () {
-        $workers = Worker::all();
+        $workers = Worker::with('position')->get();
         return view("workers.list" ,[
             'workers' => $workers
         ]);
@@ -34,6 +34,7 @@ class Workers extends Controller
 
     public function calculate (Request $request) {
         $worker = Worker::where("id", $request->id)->firstOrFail();
+        $a = \App\Models\Salary::where("worker_id", 4)->where("year", 2021)->where("month", 10)->with('worker')->with('work')->get();
         return view("workers.calculate", [
             "worker" =>  $worker
         ]);

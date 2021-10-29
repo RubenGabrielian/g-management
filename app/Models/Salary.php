@@ -14,4 +14,8 @@ class Salary extends Model
         return $this->belongsTo(Worker::class);
     }
 
+    public function work () {
+        return $this->belongsTo(Work::class);
+    }
+
 }

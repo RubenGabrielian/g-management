@@ -1,7 +1,7 @@
-<div class="container">
+<div class="container add-worker">
     <a href="{{url('home')}}" class="btn mb-3 btn-outline-danger">Հետ</a>
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div>
                 @if (session()->has('message'))
                     <div class="alert alert-success">
@@ -22,14 +22,19 @@
                         @error('surname') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="form-group">
-                        <label for="name">Պաշտոն</label>
-                        <input type="text" wire:model="position" class="form-control">
+                        <label for="name" class="d-block">Պաշտոն</label>
+                        @foreach($positions as $position)
+                            <button class="btn btn-warning" id="position-{{$position->id}}" wire:click="changePosition({{$position->id}})">{{$position->position}}</button>
+                        @endforeach
                         @error('position') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="">Ստաբիլ օրական աշխատավարձ (ոչ պարտադիր դաշտ)</label>
+                        <input type="number" wire:model="defaultSalary" class="form-control">
                     </div>
                     <div class="form-group">
                         <button wire:loading.attr="disabled" wire:click="add" class="btn btn-primary">Ավելացնել</button>
                     </div>
-
                 </div>
             </div>
         </div>

@@ -10012,7 +10012,7 @@ h3 {
   color: black;
 }
 .home .card-body a span {
-  font-size: 20px;
+  font-size: 18px;
 }
 .home .card-body a svg {
   width: 50px;
@@ -10161,4 +10161,25 @@ h3 {
 .welcome a {
   display: inline-block;
   margin: 0 auto;
+}
+
+.add-worker .btn-warning.active {
+  border: 2px solid red;
+  border-color: red !important;
+}
+
+.add-salary .multiple {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.save-default-worker-salary {
+  display: flex;
+  margin: 22px auto;
+}
+
+.works input {
+  border: none;
+  outline: none;
 }

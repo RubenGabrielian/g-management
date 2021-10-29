@@ -17,7 +17,6 @@
                         <input wire:model="month" type="month" class="form-control">
                     </div>
                     <div class="btn btn-primary" wire:click="calc">Հաշվել</div>
-                    <p>{{$test}}</p>
                     @if(!empty($salary))
 
                         <div class="col-lg-12">
@@ -28,6 +27,9 @@
                                         <th scope="col">#</th>
                                         <th scope="col">Ամսաթիվ</th>
                                         <th scope="col">Գումար</th>
+                                        @if($salary[0]->worker->position_id == 2)
+                                            <th scope="col">Աշխատանք</th>
+                                        @endif
                                         <th scope="col">Քառակուսի մետր</th>
                                     </tr>
                                     </thead>
@@ -38,7 +40,19 @@
                                         <tr>
                                             <th scope="row">{{$sal->id}}</th>
                                             <td>{{$sal->day . '-' . $sal->month . '-' . $sal->year}}</td>
-                                            <td>{{$sal->price}} ֏</td>
+                                            <td>
+                                                @if($sal->worker->position_id == 1)
+                                                    {{$sal->worker->default_salary}}
+                                                @else
+                                                    {{$sal->qm * $sal->work->qm_price}}
+                                                @endif
+                                                ֏
+                                            </td>
+                                            @if($sal->worker->position_id == 2)
+                                                <td>
+                                                    {{$sal->work->name}}
+                                                </td>
+                                            @endif
                                             <td>{{$sal->qm}}</td>
                                         </tr>
                                     @endforeach
