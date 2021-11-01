@@ -28,3 +28,4 @@ Route::get('/all/calculate', [\App\Http\Controllers\Workers::class, 'calculateAl
 Route::post("add-salary", [\App\Http\Controllers\SalariesController::class, 'add']);
 Route::get("works", [\App\Http\Controllers\WorksController::class, "index"]);
 Route::post("work-edit", [\App\Http\Controllers\WorksController::class, 'edit']);
+Route::get("prepayment/{id}", [\App\Http\Controllers\PrepaymentsController::class, 'index']);

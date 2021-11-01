@@ -15,20 +15,20 @@
                         <th scope="col">#</th>
                         <th scope="col">Անուն Ազգանուն</th>
                         <th scope="col">Գումար</th>
-                        <th scope="col">Քառակուսի մետր</th>
+                        <th scope="col">ՔՄ / Օրավարձ</th>
                         <th scope="col">Մանրամասն</th>
                     </tr>
                     </thead>
                     <tbody>
 
-                    @foreach($totals as $total)
+                    @foreach($workers as $worker)
 
                         <tr>
-                            <th scope="row">{{$total->id}}</th>
-                            <td>{{$total->worker->name . $total->worker->surname}}</td>
-                            <td>{{$total->total_price}} ֏</td>
-                            <td>{{$total->total_qm}} ՔՄ․</td>
-                            <td><a href="{{url("/calculate/".$total->worker->id.'?date='.$selectedDate)}}"
+                            <th scope="row">{{$worker->id}}</th>
+                            <td>{{$worker->worker->name . '  ' . $worker->worker->surname}}</td>
+                            <td>{{$worker->month_salary}} ֏</td>
+                            <td>{{$worker->total_qm}} @if($worker->worker->position_id == 1) Օր/ {{$worker->worker->default_salary}} ֏ @else ՔՄ․ @endif</td>
+                            <td><a href="{{url("/calculate/".$worker->worker->id.'?date='.$selectedDate)}}"
                                    class="btn btn-danger to-details">Մանրամասն</a></td>
                         </tr>
                     @endforeach

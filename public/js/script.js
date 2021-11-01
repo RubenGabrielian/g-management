@@ -1,7 +1,14 @@
 $(document).ready(function () {
     window.addEventListener('position-changed', event => {
         $(`#position-${event.detail.id}`).addClass('active');
+    });
+    window.addEventListener("print-total-salaries", event => {
+        window.print();
+    });
+    window.addEventListener("take-dept", event => {
+        $(".take-debt").show();
     })
+
     $(".fc-daygrid-day-frame").click(function () {
         let date = $(this).attr("data-date");
         $(this).toggleClass("active");
@@ -24,10 +31,22 @@ $(document).ready(function () {
                 }
             }
         })
-
-
     })
+
+    // $("input[name='prepayment']").change(function(){
+    //    if($(this).val() == 'debt') {
+    //         $(".prepayment-month label").html("Ընտրեք թե որ ամսին եք ցանկանում տալ պարտքը");
+    //         $(".prepayment-month").show();
+    //         $(".btn-primary").removeAttr("disabled");
+    //    } else {
+    //        $(".prepayment-month label").html("Ընտրեք թե որ ամսի աշխատավարձից եք ցանկանում ստանալ կանխավճարը");
+    //        $(".prepayment-month").show();
+    //        $(".btn-primary").removeAttr("disabled");
+    //    }
+    // })
 })
+
+
 
 addEventListener('DOMContentLoaded', function () {
    var ga =  pickmeup('.multiple', {

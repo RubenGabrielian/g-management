@@ -14,33 +14,70 @@ class Workers extends Controller
         $this->middleware('auth');
     }
 
-    public function add () {
+    public function add()
+    {
         return view("workers.add");
     }
 
-    public function list () {
+    public function list()
+    {
         $workers = Worker::with('position')->get();
-        return view("workers.list" ,[
+        return view("workers.list", [
             'workers' => $workers
         ]);
     }
 
-    public function addSalary (Request  $request) {
+    public function addSalary(Request $request)
+    {
         $worker = Worker::where("id", $request->id)->firstOrFail();
-        return view('workers.addSalary',[
+        return view('workers.addSalary', [
             'worker' => $worker
         ]);
     }
 
-    public function calculate (Request $request) {
+    public function calculate(Request $request)
+    {
         $worker = Worker::where("id", $request->id)->firstOrFail();
         $a = \App\Models\Salary::where("worker_id", 4)->where("year", 2021)->where("month", 10)->with('worker')->with('work')->get();
         return view("workers.calculate", [
-            "worker" =>  $worker
+            "worker" => $worker
         ]);
     }
 
-    public function calculateAll () {
+    public function calculateAll()
+    {
+
+        $workers = [];
+        $builders = [];
+        $temp_array = array();
+        $i = 0;
+        $key_array = array();
+
+        $allWorkers = Salary::where("month", 10)->where("year", 2021)->with('worker')->get();
+        foreach ($allWorkers as $worker) {
+            if ($worker->worker->position_id == 1) {
+                array_push($workers, $worker);
+            } else if ($worker->worker->position_id == 2) {
+                array_push($builders, $worker);
+            }
+        }
+
+        foreach ($workers as $worker) {
+            $banvorSalary = Salary::where("worker_id", $worker->worker_id)->where("month", 10)->where("year", 2021)->get();
+            $worker['count'] = count($banvorSalary);
+            $worker['month_salary'] = $worker->count * $worker->worker->default_salary;
+
+            if(!in_array($worker["worker_id"], $key_array)) {
+                $key_array[$i] = $worker["worker_id"];
+                $temp_array[$i] = $worker;
+            }
+            $i++;
+        }
+
+      
+
+
+
 ////        $totals = Salary::where("month", 10)->where("year", 2021)->with('worker')->select("price")->groupBy("worker_id")->get();
 //
 //
