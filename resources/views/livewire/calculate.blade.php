@@ -90,6 +90,10 @@
                                         <label for="">Գումարի որ մասն եք ուզում թողնել պարտք</label>
                                         <input type="number" wire:model="prepayment" class="form-control">
                                     </div>
+                                    <div class="form-group mt-3">
+                                        <label for="">Որ ամսին եք ուզում վերադարձնել</label>
+                                        <input type="month" wire:model="whichMonth" class="form-control">
+                                    </div>
                                     <div class="form-group">
                                         <button class="btn btn-primary" wire:click="addPrepayment">Պահպանել</button>
                                     </div>

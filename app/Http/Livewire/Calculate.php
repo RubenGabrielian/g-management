@@ -21,6 +21,7 @@ class Calculate extends Component
     public $showPrepayment = false;
     public $debts = 0;
     public $grandTotal = 0;
+    public $whichMonth;
 
 
     public function calc()
@@ -81,17 +82,16 @@ class Calculate extends Component
 
     public function addPrepayment()
     {
-        $date = new \DateTime($this->month);
-        $next =  $date->modify('next month');
-        $nextMonth =  $next->format("d");
-        $nextMonthYear = $next->format("Y");
+        $explodeDate = explode("-", $this->whichMonth);
+        $year = $explodeDate[0];
+        $month = $explodeDate[1];
         $prepayment = new \App\Models\Prepayment();
         $prepayment->worker_id = $this->worker->id;
         $prepayment->type = "debt";
         $prepayment->price = $this->prepayment;
         $prepayment->day = 0;
-        $prepayment->month = $nextMonth;
-        $prepayment->year = $nextMonthYear;
+        $prepayment->month = $month;
+        $prepayment->year = $year;
         $prepayment->save();
         session()->flash('message', 'Հաջողությամբ պահպանվեց');
         $this->prepayment = '';
